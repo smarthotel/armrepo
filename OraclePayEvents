@@ -1,12 +1,11 @@
 subscriptionId="$(az account show --query id -o tsv)"
-crsservice=oracle-bizz-crs
 payservice=oracle-bizz-pay
 appplan=oracle-bizz-asp
 topicname=oracle
 location=westeurope
 resourcegroup=Oracle
-crsendpoint=https://oracle-bizz-crs.azurewebsites.net
 payendpoint=https://oracle-bizz-pay.azurewebsites.net
+postendpoint=https://connect-post.azurewebsites.net
 
 az deployment group create \
   --resource-group $resourcegroup \
