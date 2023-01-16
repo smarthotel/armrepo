@@ -18,8 +18,7 @@
       "type": "string",
       "allowedValues": [
         "P2V2",
-        "P3V2",
-        "S2"
+        "P3V2"
       ],
       "defaultValue": "P2V2",
       "metadata": {
