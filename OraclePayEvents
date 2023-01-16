@@ -1,0 +1,22 @@
+subscriptionId="$(az account show --query id -o tsv)"
+crsservice=oracle-bizz-crs
+payservice=oracle-bizz-pay
+appplan=oracle-bizz-asp
+topicname=oracle
+location=westeurope
+resourcegroup=Oracle
+crsendpoint=https://oracle-bizz-crs.azurewebsites.net
+payendpoint=https://oracle-bizz-pay.azurewebsites.net
+
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$payservice hostingPlanName=$appplan
+
+az eventgrid topic create --name $topicname -l $location -g $resourcegroup
+
+az eventgrid event-subscription create \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name PaymentPrepared \
+  --endpoint $payendpoint \
+  --included-event-types "Oracle.Payment.Prepared"
