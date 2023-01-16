@@ -24,7 +24,7 @@
         "B3",
         "S1"
       ],
-      "defaultValue": "B2",
+      "defaultValue": "P2V2",
       "metadata": {
         "description": "The pricing tier for the hosting plan."
       }
