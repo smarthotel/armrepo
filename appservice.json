@@ -17,12 +17,9 @@
     "sku": {
       "type": "string",
       "allowedValues": [
-        "F1",
-        "D1",
-        "B1",
-        "B2",
-        "B3",
-        "S1"
+        "P2V2",
+        "P3V2",
+        "S2"
       ],
       "defaultValue": "P2V2",
       "metadata": {
