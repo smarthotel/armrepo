@@ -29,12 +29,14 @@ az eventgrid event-subscription create \
 # Create CRS event subscriptions
 echo "Create CRS event subscriptions in $topicname"
 az eventgrid event-subscription create \
+  --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name BusinessPrepared \
   --endpoint $crsendpoint \
   --included-event-types "$resourcegroup.Business.Prepared"
   
 az eventgrid event-subscription create \
+  --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name RefreshPrepared \
   --endpoint $crsendpoint \
@@ -43,24 +45,28 @@ az eventgrid event-subscription create \
 # Create CRS Post event subscriptions
 echo "Create CRS Post event subscriptions in $topicname"
 az eventgrid event-subscription create \
+  --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name ProxyProcessed \
   --endpoint $postendpoint \
   --included-event-types "$resourcegroup.Proxy.Processed"
     
 az eventgrid event-subscription create \
+  --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name BusinessProcessed \
   --endpoint $postendpoint \
   --included-event-types "$resourcegroup.Business.Processed"
       
 az eventgrid event-subscription create \
+  --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name ReservationCommit \
   --endpoint $postendpoint \
   --included-event-types "$resourcegroup.Commit.Requested"
         
 az eventgrid event-subscription create \
+  --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name ReservationPush \
   --endpoint $postendpoint \
