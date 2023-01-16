@@ -22,7 +22,7 @@ echo "Create system event subscriptions in $topicname"
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-  --name PurgeLog \
+  --name SysPurgeLog \
   --endpoint $dataendpoint \
   --included-event-types "$resourcegroup.PurgLog.Requested"
 
@@ -31,14 +31,14 @@ echo "Create CRS event subscriptions in $topicname"
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-  --name BusinessPrepared \
+  --name CrsBizzBusinessPrepared \
   --endpoint $crsendpoint \
   --included-event-types "$resourcegroup.Business.Prepared"
   
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-  --name RefreshPrepared \
+  --name CrsBizzRefreshPrepared \
   --endpoint $crsendpoint \
   --included-event-types "$resourcegroup.Refresh.Prepared"
 
@@ -47,27 +47,27 @@ echo "Create CRS Post event subscriptions in $topicname"
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-  --name ProxyProcessed \
+  --name CrsPostProxyProcessed \
   --endpoint $postendpoint \
   --included-event-types "$resourcegroup.Proxy.Processed"
     
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-  --name BusinessProcessed \
+  --name CrsPostBusinessProcessed \
   --endpoint $postendpoint \
   --included-event-types "$resourcegroup.Business.Processed"
       
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-  --name ReservationCommit \
+  --name CrsPostReservationCommit \
   --endpoint $postendpoint \
   --included-event-types "$resourcegroup.Commit.Requested"
         
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-  --name ReservationPush \
+  --name CrsPostReservationPush \
   --endpoint $postendpoint \
   --included-event-types "$resourcegroup.Push.Requested"
