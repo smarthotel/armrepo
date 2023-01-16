@@ -1,0 +1,11 @@
+subscriptionId="$(az account show --query id -o tsv)"
+payservice=pms-bizz-pay
+appplan=pms-bizz-asp
+resourcegroup=PMS
+
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$payservice hostingPlanName=$appplan
+  
+  az webapp deployment slot create --name $payservice --resource-group $resourcegroup --slot deployment
