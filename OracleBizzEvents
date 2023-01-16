@@ -15,11 +15,12 @@ az eventgrid topic delete -g $resourcegroup --name $topicname
 
 # Create eventgrid topic
 echo "Create topic $topicname"
-az eventgrid topic create --name $topicname -l $location -g $resourcegroup
+az eventgrid topic create --name $topicname -l $location -g $resourcegroup --output none
 
 # Create system event subscriptions
 echo "Create system event subscriptions in $topicname"
 az eventgrid event-subscription create \
+  --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PurgeLog \
   --endpoint $dataendpoint \
