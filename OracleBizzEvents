@@ -8,6 +8,7 @@ crsendpoint=https://oracle-bizz-crs.azurewebsites.net
 payendpoint=https://oracle-bizz-pay.azurewebsites.net
 postendpoint=https://connect-post.azurewebsites.net
 dataendpoint=https://connect-data.azurewebsites.net/log
+getendpoint=https://connect-get.azurewebsites.net
 
 # Delete existing eventgrid topic
 echo "Delete topic $topicname"
@@ -25,6 +26,47 @@ az eventgrid event-subscription create \
   --name SysPurgeLog \
   --endpoint $dataendpoint \
   --included-event-types "$resourcegroup.PurgLog.Requested"
+
+# Create Get event subscriptions
+echo "Create Get event subscriptions in $topicname"
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name GetReport \
+  --endpoint $getendpoint \
+  --included-event-types "$resourcegroup.Report.Required"
+
+if [ $topicname = 'louvre' ]; then
+  az eventgrid event-subscription create \
+    --output none \
+    --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+    --name GetResult \
+    --endpoint $getendpoint \
+    --included-event-types "$resourcegroup.Result.Required"
+fi
+
+if [ $topicname = 'pms' ]; then
+  az eventgrid event-subscription create \
+    --output none \
+    --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+    --name GetReservation \
+    --endpoint $getendpoint \
+    --included-event-types "$resourcegroup.Reservation.Required"
+
+  az eventgrid event-subscription create \
+    --output none \
+    --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+    --name GetInventory \
+    --endpoint $getendpoint \
+    --included-event-types "$resourcegroup.Inventory.Required"
+    
+  az eventgrid event-subscription create \
+    --output none \
+    --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+    --name GetRates \
+    --endpoint $getendpoint \
+    --included-event-types "$resourcegroup.Rates.Required"
+fi
 
 # Create CRS event subscriptions
 echo "Create CRS event subscriptions in $topicname"
