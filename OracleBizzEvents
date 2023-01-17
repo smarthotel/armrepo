@@ -1,5 +1,6 @@
 # Set variables
 
+subscription=smartconnect
 subscriptionId="$(az account show --query id -o tsv)"
 location=westeurope
 resourcegroup=Oracle
@@ -9,6 +10,9 @@ payendpoint=https://oracle-bizz-pay.azurewebsites.net
 postendpoint=https://connect-post.azurewebsites.net
 dataendpoint=https://connect-data.azurewebsites.net/log
 getendpoint=https://connect-get.azurewebsites.net
+
+#Set active subscription
+az account set --subscription $subscription
 
 # Delete existing eventgrid topic
 echo "Delete topic $topicname"
@@ -299,4 +303,3 @@ az eventgrid event-subscription create \
   --name PayGetReportRequired \
   --endpoint $getendpoint \
   --included-event-types "$resourcegroup.Report.Required"
-  
