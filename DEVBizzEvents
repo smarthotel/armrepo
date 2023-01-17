@@ -8,7 +8,7 @@ topicname=connect-dev
 crsendpoint=https://development.smarthotel.nl/connect/bizzcrs
 payendpoint=https://development.smarthotel.nl/connect/bizzpay
 postendpoint=https://development.smarthotel.nl/connect/post
-dataendpoint=https://development.smarthotel.nl/connect/data
+dataendpoint=https://development.smarthotel.nl/connect/data/log
 getendpoint=https://development.smarthotel.nl/connect/get
 
 #Set active subscription
