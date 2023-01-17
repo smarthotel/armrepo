@@ -29,7 +29,7 @@ az eventgrid event-subscription create \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name SysPurgeLog \
   --endpoint $dataendpoint \
-  --included-event-types "$resourcegroup.PurgLog.Requested"
+  --included-event-types "$resourcegroup.PurgeLog.Requested"
 
 # Create Get event subscriptions
 echo "Create Get event subscriptions in $topicname"
