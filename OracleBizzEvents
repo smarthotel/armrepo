@@ -49,9 +49,9 @@ if [ $topicname = 'pms' ]; then
   az eventgrid event-subscription create \
     --output none \
     --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-    --name GetReservation \
+    --name GetPMSReservation \
     --endpoint $getendpoint \
-    --included-event-types "$resourcegroup.Reservation.Required"
+    --included-event-types "$resourcegroup.PMSReservation.Required"
 
   az eventgrid event-subscription create \
     --output none \
@@ -113,3 +113,61 @@ az eventgrid event-subscription create \
   --name CrsPostReservationPush \
   --endpoint $postendpoint \
   --included-event-types "$resourcegroup.Push.Requested"
+
+# Create Pay event subscriptions
+echo "Create Pay event subscriptions in $topicname"
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name PayBizzPaymentPrepared \
+  --endpoint $crsendpoint \
+  --included-event-types "$resourcegroup.Payment.Prepared"
+  
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name PayBizzPaylinkPrepared \
+  --endpoint $crsendpoint \
+  --included-event-types "$resourcegroup.Paylink.Prepared"
+  
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name PayBizzNotificationPrepared \
+  --endpoint $crsendpoint \
+  --included-event-types "$resourcegroup.Notification.Prepared"
+  
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name PayBizzChargePrepared \
+  --endpoint $crsendpoint \
+  --included-event-types "$resourcegroup.Charge.Prepared"
+  
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name PayBizzAutoChargePrepared \
+  --endpoint $crsendpoint \
+  --included-event-types "$resourcegroup.AutoCharge.Prepared"
+    
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name PayBizzCapturePrepared \
+  --endpoint $crsendpoint \
+  --included-event-types "$resourcegroup.Capture.Prepared"
+      
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name PayBizzReportPrepared \
+  --endpoint $crsendpoint \
+  --included-event-types "$resourcegroup.Report.Prepared"
+      
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name PayBizzCheckoutPrepared \
+  --endpoint $crsendpoint \
+  --included-event-types "$resourcegroup.Checkout.Prepared"
