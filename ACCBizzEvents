@@ -3,7 +3,7 @@
 subscription=development
 subscriptionId="$(az account show --query id -o tsv)"
 location=westeurope
-resourcegroup=development-dev-rg
+resourcegroup=acceptance-dev-rg
 topicname=connect-acc
 cloudname=Acc
 crsendpoint=https://acceptance.smarthotel.nl/connect/bizzcrs
