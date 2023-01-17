@@ -112,6 +112,13 @@ az eventgrid event-subscription create \
   --name CrsPostReservationCommit \
   --endpoint $postendpoint \
   --included-event-types "$cloudname.Commit.Requested"
+
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name CrsPostARICommit \
+  --endpoint $postendpoint \
+  --included-event-types "$cloudname.Commit.Processed"
         
 az eventgrid event-subscription create \
   --output none \
