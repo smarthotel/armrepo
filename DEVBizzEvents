@@ -5,6 +5,7 @@ subscriptionId="$(az account show --query id -o tsv)"
 location=westeurope
 resourcegroup=development-dev-rg
 topicname=connect-dev
+cloudname=Dev
 crsendpoint=https://development.smarthotel.nl/connect/bizzcrs
 payendpoint=https://development.smarthotel.nl/connect/bizzpay
 postendpoint=https://development.smarthotel.nl/connect/post
@@ -29,7 +30,7 @@ az eventgrid event-subscription create \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name SysPurgeLog \
   --endpoint $dataendpoint \
-  --included-event-types "$resourcegroup.PurgeLog.Requested"
+  --included-event-types "$cloudname.PurgeLog.Requested"
 
 # Create Get event subscriptions
 echo "Create Get event subscriptions in $topicname"
@@ -40,7 +41,7 @@ if [ $topicname = 'louvre' ]; then
     --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
     --name GetResult \
     --endpoint $getendpoint \
-    --included-event-types "$resourcegroup.Result.Required"
+    --included-event-types "$cloudname.Result.Required"
 fi
 
 if [ $topicname = 'pms' ]; then
@@ -49,21 +50,21 @@ if [ $topicname = 'pms' ]; then
     --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
     --name GetPMSReservation \
     --endpoint $getendpoint \
-    --included-event-types "$resourcegroup.PMSReservation.Required"
+    --included-event-types "$cloudname.PMSReservation.Required"
 
   az eventgrid event-subscription create \
     --output none \
     --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
     --name GetInventory \
     --endpoint $getendpoint \
-    --included-event-types "$resourcegroup.Inventory.Required"
+    --included-event-types "$cloudname.Inventory.Required"
     
   az eventgrid event-subscription create \
     --output none \
     --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
     --name GetRates \
     --endpoint $getendpoint \
-    --included-event-types "$resourcegroup.Rates.Required"
+    --included-event-types "$cloudname.Rates.Required"
 fi
 
 # Create CRS event subscriptions
@@ -73,14 +74,14 @@ az eventgrid event-subscription create \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsBizzBusinessPrepared \
   --endpoint $crsendpoint \
-  --included-event-types "$resourcegroup.Business.Prepared"
+  --included-event-types "$cloudname.Business.Prepared"
   
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsBizzRefreshPrepared \
   --endpoint $crsendpoint \
-  --included-event-types "$resourcegroup.Refresh.Prepared"
+  --included-event-types "$cloudname.Refresh.Prepared"
 
 # Create CRS Post event subscriptions
 echo "Create CRS Post event subscriptions in $topicname"
@@ -89,42 +90,42 @@ az eventgrid event-subscription create \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsPostProxyProcessed \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Proxy.Processed"
+  --included-event-types "$cloudname.Proxy.Processed"
     
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsPostBusinessProcessed \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Business.Processed"
+  --included-event-types "$cloudname.Business.Processed"
     
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsPostReservationProcessed \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Reservation.Processed"
+  --included-event-types "$cloudname.Reservation.Processed"
       
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsPostReservationCommit \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Commit.Requested"
+  --included-event-types "$cloudname.Commit.Requested"
         
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsPostReservationPush \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Push.Requested"
+  --included-event-types "$cloudname.Push.Requested"
 
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsPostResultRequested \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Result.Requested"
+  --included-event-types "$cloudname.Result.Requested"
 
 if [ $topicname = 'pms' ]; then
   az eventgrid event-subscription create \
@@ -132,7 +133,7 @@ if [ $topicname = 'pms' ]; then
     --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
     --name CrsGuestRegistrationRequested \
     --endpoint $postendpoint \
-    --included-event-types "$resourcegroup.Registration.Requested"
+    --included-event-types "$cloudname.Registration.Requested"
 fi
 
 # Create Payment prepared event subscriptions
@@ -142,56 +143,56 @@ az eventgrid event-subscription create \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzPaymentPrepared \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Payment.Prepared"
+  --included-event-types "$cloudname.Payment.Prepared"
   
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzPaylinkPrepared \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Paylink.Prepared"
+  --included-event-types "$cloudname.Paylink.Prepared"
   
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzNotificationPrepared \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Notification.Prepared"
+  --included-event-types "$cloudname.Notification.Prepared"
   
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzChargePrepared \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Charge.Prepared"
+  --included-event-types "$cloudname.Charge.Prepared"
   
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzAutoChargePrepared \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.AutoCharge.Prepared"
+  --included-event-types "$cloudname.AutoCharge.Prepared"
     
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzCapturePrepared \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Capture.Prepared"
+  --included-event-types "$cloudname.Capture.Prepared"
       
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzReportPrepared \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Report.Prepared"
+  --included-event-types "$cloudname.Report.Prepared"
       
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzCheckoutPrepared \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Checkout.Prepared"
+  --included-event-types "$cloudname.Checkout.Prepared"
 
 # Create Payment processed event subscriptions
 echo "Create Payment processed event subscriptions in $topicname"
@@ -200,42 +201,42 @@ az eventgrid event-subscription create \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzTokenProcessed \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Token.Processed"
+  --included-event-types "$cloudname.Token.Processed"
 
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzChargeProcessed \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Charge.Processed"
+  --included-event-types "$cloudname.Charge.Processed"
   
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzCaptureProcessed \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Capture.Processed"
+  --included-event-types "$cloudname.Capture.Processed"
     
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzStatusProcessed \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Status.Processed"
+  --included-event-types "$cloudname.Status.Processed"
     
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzReminderProcessed \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Reminder.Processed"
+  --included-event-types "$cloudname.Reminder.Processed"
     
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayBizzNotificationProcessed \
   --endpoint $payendpoint \
-  --included-event-types "$resourcegroup.Notification.Processed"
+  --included-event-types "$cloudname.Notification.Processed"
 
 # Create Payment Post event subscriptions
 echo "Create Payment Post event subscriptions in $topicname"
@@ -244,56 +245,56 @@ az eventgrid event-subscription create \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayPostPaymentRequested \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Payment.Requested"
+  --included-event-types "$cloudname.Payment.Requested"
 
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayPostChargeRequested \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Charge.Requested"
+  --included-event-types "$cloudname.Charge.Requested"
   
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayPostCaptureRequested \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Capture.Requested"
+  --included-event-types "$cloudname.Capture.Requested"
 
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayPostStatusRequested \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Status.Requested"
+  --included-event-types "$cloudname.Status.Requested"
 
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayPostNotificationRequested \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Notification.Requested"
+  --included-event-types "$cloudname.Notification.Requested"
 
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayPostReminderRequested \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Reminder.Requested"
+  --included-event-types "$cloudname.Reminder.Requested"
 
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayPostPaymentStatusRequested \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Paymentstatus.Requested"
+  --included-event-types "$cloudname.Paymentstatus.Requested"
 
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayPostDepositRequested \
   --endpoint $postendpoint \
-  --included-event-types "$resourcegroup.Deposit.Requested"
+  --included-event-types "$cloudname.Deposit.Requested"
 
 # Create Paymnt Get event subscriptions
 echo "Create Payment Get event subscriptions in $topicname"
@@ -302,4 +303,4 @@ az eventgrid event-subscription create \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name PayGetReportRequired \
   --endpoint $getendpoint \
-  --included-event-types "$resourcegroup.Report.Required"
+  --included-event-types "$cloudname.Report.Required"
