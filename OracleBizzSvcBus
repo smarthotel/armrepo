@@ -5,7 +5,7 @@ subscriptionId="$(az account show --query id -o tsv)"
 location=westeurope
 resourcegroup=Oracle
 cloudname=Oracle
-queuename=sbOracle
+queuename=sb-oracle-event
 
 #Set active subscription
 az account set --subscription $subscription
