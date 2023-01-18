@@ -1,0 +1,22 @@
+# Set variables
+
+subscription=smartconnect
+subscriptionId="$(az account show --query id -o tsv)"
+location=westeurope
+resourcegroup=Oracle
+cloudname=Oracle
+queuename=sbOracle
+
+#Set active subscription
+az account set --subscription $subscription
+
+# Delete existing Servicebus namespace
+echo "Delete Servicebus $queuename"
+az servicebus namespace delete -g $resourcegroup --name $queuename
+
+# Create Servicebus namespace
+echo "Create Servicebus $queuename"
+az servicebus namespace create --resource-group $resourcegroup --name $queuename --location $location
+
+az servicebus queue create --resource-group $resourcegroup --namespace-name $queuename --name businessqueue
+az servicebus queue create --resource-group $resourcegroup --namespace-name $queuename --name postqueue
