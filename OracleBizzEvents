@@ -6,6 +6,7 @@ location=westeurope
 resourcegroup=Oracle
 topicname=oracle
 cloudname=Oracle
+queuename=sbOracle
 crsendpoint=https://oracle-bizz-crs.azurewebsites.net
 payendpoint=https://oracle-bizz-pay.azurewebsites.net
 postendpoint=https://connect-post.azurewebsites.net
@@ -34,15 +35,6 @@ az eventgrid event-subscription create \
 
 # Create Get event subscriptions
 echo "Create Get event subscriptions in $topicname"
-
-if [ $topicname = 'louvre' ]; then
-  az eventgrid event-subscription create \
-    --output none \
-    --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-    --name GetResult \
-    --endpoint $getendpoint \
-    --included-event-types "$cloudname.Result.Required"
-fi
 
 if [ $topicname = 'pms' ]; then
   az eventgrid event-subscription create \
@@ -73,7 +65,8 @@ az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsBizzBusinessPrepared \
-  --endpoint $crsendpoint \
+  --endpoint-type servicebusqueue \
+  --endpoint "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.ServiceBus/namespaces/$queuename/queues/businessqueue" \
   --included-event-types "$cloudname.Business.Prepared"
   
 az eventgrid event-subscription create \
