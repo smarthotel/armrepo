@@ -36,29 +36,6 @@ az eventgrid event-subscription create \
 # Create Get event subscriptions
 echo "Create Get event subscriptions in $topicname"
 
-if [ $topicname = 'pms' ]; then
-  az eventgrid event-subscription create \
-    --output none \
-    --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-    --name GetPMSReservation \
-    --endpoint $getendpoint \
-    --included-event-types "$cloudname.PMSReservation.Required"
-
-  az eventgrid event-subscription create \
-    --output none \
-    --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-    --name GetInventory \
-    --endpoint $getendpoint \
-    --included-event-types "$cloudname.Inventory.Required"
-    
-  az eventgrid event-subscription create \
-    --output none \
-    --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-    --name GetRates \
-    --endpoint $getendpoint \
-    --included-event-types "$cloudname.Rates.Required"
-fi
-
 # Create CRS event subscriptions
 echo "Create CRS event subscriptions in $topicname"
 az eventgrid event-subscription create \
@@ -126,15 +103,6 @@ az eventgrid event-subscription create \
   --name CrsPostResultRequested \
   --endpoint $postendpoint \
   --included-event-types "$cloudname.Result.Requested"
-
-if [ $topicname = 'pms' ]; then
-  az eventgrid event-subscription create \
-    --output none \
-    --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-    --name CrsGuestRegistrationRequested \
-    --endpoint $postendpoint \
-    --included-event-types "$cloudname.Registration.Requested"
-fi
 
 # Create Payment prepared event subscriptions
 echo "Create Payment prepared event subscriptions in $topicname"
