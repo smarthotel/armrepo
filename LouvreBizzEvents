@@ -6,6 +6,7 @@ location=westeurope
 resourcegroup=Louvre
 topicname=louvrev2
 cloudname=Louvre
+queuename=sbLouvre
 crsendpoint=https://louvre-bizz-crs.azurewebsites.net
 payendpoint=https://louvre-bizz-pay.azurewebsites.net
 postendpoint=https://louvre-post.azurewebsites.net
@@ -47,7 +48,8 @@ az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsBizzBusinessPrepared \
-  --endpoint $crsendpoint \
+  --endpoint-type servicebusqueue \
+  --endpoint "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.ServiceBus/namespaces/$queuename/queues/businessqueue" \
   --included-event-types "$cloudname.Business.Prepared"
   
 az eventgrid event-subscription create \
