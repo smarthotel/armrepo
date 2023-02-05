@@ -5,7 +5,6 @@ location=westeurope
 resourcegroup=PMS
 topicname=pmsv2
 cloudname=PMS
-queuename=sb-pms-event
 crsendpoint=https://pms-bizz-crs.azurewebsites.net
 payendpoint=https://pms-bizz-pay.azurewebsites.net
 postendpoint=https://pms-post.azurewebsites.net
