@@ -1,12 +1,10 @@
 # Set variables
-
 subscription=smartconnect
 subscriptionId="$(az account show --query id -o tsv)"
 location=westeurope
 resourcegroup=Oracle
 topicname=oracle
 cloudname=Oracle
-queuename=sb-oracle-event
 crsendpoint=https://oracle-bizz-crs.azurewebsites.net
 payendpoint=https://oracle-bizz-pay.azurewebsites.net
 postendpoint=https://connect-post.azurewebsites.net
@@ -42,16 +40,14 @@ az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsBizzBusinessPrepared \
-  --endpoint-type servicebusqueue \
-  --endpoint "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.ServiceBus/namespaces/$queuename/queues/businessqueue" \
+  --endpoint $crsendpoint \
   --included-event-types "$cloudname.Business.Prepared"
   
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsBizzRefreshPrepared \
-  --endpoint-type servicebusqueue \
-  --endpoint "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.ServiceBus/namespaces/$queuename/queues/businessqueue" \
+  --endpoint $crsendpoint \
   --included-event-types "$cloudname.Refresh.Prepared"
 
 # Create CRS Post event subscriptions
@@ -60,16 +56,14 @@ az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsPostProxyProcessed \
-  --endpoint-type servicebusqueue \
-  --endpoint "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.ServiceBus/namespaces/$queuename/queues/postqueue" \
+  --endpoint $postendpoint \
   --included-event-types "$cloudname.Proxy.Processed"
     
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsPostBusinessProcessed \
-  --endpoint-type servicebusqueue \
-  --endpoint "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.ServiceBus/namespaces/$queuename/queues/postqueue" \
+  --endpoint $postendpoint \
   --included-event-types "$cloudname.Business.Processed"
     
 az eventgrid event-subscription create \
@@ -86,14 +80,6 @@ az eventgrid event-subscription create \
   --endpoint $postendpoint \
   --included-event-types "$cloudname.Commit.Requested"
 
-az eventgrid event-subscription create \
-  --output none \
-  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-  --name CrsPostARICommit \
-  --endpoint-type servicebusqueue \
-  --endpoint "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.ServiceBus/namespaces/$queuename/queues/postqueue" \
-  --included-event-types "$cloudname.Commit.Processed"
-        
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
