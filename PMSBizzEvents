@@ -1,12 +1,11 @@
 # Set variables
-
 subscription=smartconnect
 subscriptionId="$(az account show --query id -o tsv)"
 location=westeurope
 resourcegroup=PMS
 topicname=pmsv2
 cloudname=PMS
-queuename=sbPMS
+queuename=sb-pms-event
 crsendpoint=https://pms-bizz-crs.azurewebsites.net
 payendpoint=https://pms-bizz-pay.azurewebsites.net
 postendpoint=https://pms-post.azurewebsites.net
@@ -56,14 +55,13 @@ az eventgrid event-subscription create \
   --endpoint $getendpoint \
   --included-event-types "$cloudname.Rates.Required"
 
-# Create CRS event subscriptions
+# Create CRS Bizz event subscriptions
 echo "Create CRS event subscriptions in $topicname"
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
   --name CrsBizzBusinessPrepared \
-  --endpoint-type servicebusqueue \
-  --endpoint "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.ServiceBus/namespaces/$queuename/queues/businessqueue" \
+  --endpoint $crsendpoint \
   --included-event-types "$cloudname.Business.Prepared"
   
 az eventgrid event-subscription create \
@@ -291,7 +289,7 @@ az eventgrid event-subscription create \
   --endpoint $postendpoint \
   --included-event-types "$cloudname.Deposit.Requested"
 
-# Create Paymnt Get event subscriptions
+# Create Payment Get event subscriptions
 echo "Create Payment Get event subscriptions in $topicname"
 az eventgrid event-subscription create \
   --output none \
