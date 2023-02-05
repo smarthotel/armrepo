@@ -56,7 +56,7 @@ az eventgrid event-subscription create \
   --included-event-types "$cloudname.Rates.Required"
 
 # Create CRS Bizz event subscriptions
-echo "Create CRS event subscriptions in $topicname"
+echo "Create CRS Bizz event subscriptions in $topicname"
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
@@ -101,13 +101,6 @@ az eventgrid event-subscription create \
   --endpoint $postendpoint \
   --included-event-types "$cloudname.Commit.Requested"
 
-az eventgrid event-subscription create \
-  --output none \
-  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
-  --name CrsPostARICommit \
-  --endpoint $postendpoint \
-  --included-event-types "$cloudname.Commit.Processed"
-        
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
