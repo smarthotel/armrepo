@@ -1,0 +1,18 @@
+resourcegroup=Inntel
+appplan=inntel-bizz-asp
+crsservice=inntel-bizz-crs
+payservice=inntel-bizz-pay
+
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$payservice hostingPlanName=$appplan
+  
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$crsservice hostingPlanName=$appplan
+  
+az webapp deployment slot create --name $payservice --resource-group $resourcegroup --slot deployment
+
+az webapp deployment slot create --name $crsservice --resource-group $resourcegroup --slot deployment
