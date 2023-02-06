@@ -39,6 +39,13 @@ az eventgrid event-subscription create \
   --name GetPMSReservation \
   --endpoint $getendpoint \
   --included-event-types "$cloudname.PMSReservation.Required"
+  
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name GetReservation \
+  --endpoint $getendpoint \
+  --included-event-types "$cloudname.Reservation.Required"
 
 az eventgrid event-subscription create \
   --output none \
