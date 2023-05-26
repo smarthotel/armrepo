@@ -287,3 +287,5 @@ az eventgrid event-subscription create \
   --name PayGetReportRequired \
   --endpoint $getendpoint \
   --included-event-types "$cloudname.Report.Required"
+
+
