@@ -12,7 +12,7 @@ payendpoint=https://development.smarthotel.nl/connect/bizzpay
 postifcendpoint=https://development.smarthotel.nl/connect/postifc
 postpmsendpoint=https://development.smarthotel.nl/connect/postpms
 postpayendpoint=https://development.smarthotel.nl/connect/postpay
-dataendpoint=https://development.smarthotel.nl/connect/data/log
+dataendpoint=https://development.smarthotel.nl/connect/dataview/log
 getendpoint=https://development.smarthotel.nl/connect/get
 
 #Set active subscription
