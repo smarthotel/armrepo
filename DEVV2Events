@@ -35,9 +35,6 @@ az eventgrid event-subscription create \
   --endpoint $dataendpoint \
   --included-event-types "$cloudname.PurgeLog.Requested"
 
-# Create Get event subscriptions
-echo "Create Get event subscriptions in $topicname"
-
 # Create CRS event subscriptions
 echo "Create CRS event subscriptions in $topicname"
 az eventgrid event-subscription create \
