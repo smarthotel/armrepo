@@ -8,6 +8,9 @@ ifcservice=louvre-post-ifc
 pmsservice=louvre-post-pms
 payservice=louvre-post-pay
 
+#Set active subscription
+az account set --subscription $subscription
+
 az deployment group create \
   --resource-group $resourcegroup \
   --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
