@@ -1,0 +1,27 @@
+resourcegroup=Louvre
+appplan=louvre-post-asp
+ifcservice=louvre-post-ifc
+pmsservice=louvre-post-pms
+payservice=louvre-post-pay
+
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$ifcservice hostingPlanName=$appplan
+  
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$pmsservice hostingPlanName=$appplan
+  
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$payservice hostingPlanName=$appplan
+  
+az webapp deployment slot create --name $ifcservice --resource-group $resourcegroup --slot deployment
+
+az webapp deployment slot create --name $pmsservice --resource-group $resourcegroup --slot deployment
+
+az webapp deployment slot create --name $payservice --resource-group $resourcegroup --slot deployment
+  
