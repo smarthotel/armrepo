@@ -1,0 +1,34 @@
+# Set variables
+subscription=smartconnect
+subscriptionId="$(az account show --query id -o tsv)"
+location=westeurope
+resourcegroup=PMS
+appplan=pms-post-asp
+ifcservice=pms-post-ifc
+pmsservice=pms-post-pms
+payservice=pms-post-pay
+
+#Set active subscription
+az account set --subscription $subscription
+
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$ifcservice hostingPlanName=$appplan
+  
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$pmsservice hostingPlanName=$appplan
+  
+az deployment group create \
+  --resource-group $resourcegroup \
+  --template-uri "https://raw.githubusercontent.com/smarthotel/armrepo/master/appservice.json" \
+  --parameters siteName=$payservice hostingPlanName=$appplan
+  
+az webapp deployment slot create --name $ifcservice --resource-group $resourcegroup --slot deployment
+
+az webapp deployment slot create --name $pmsservice --resource-group $resourcegroup --slot deployment
+
+az webapp deployment slot create --name $payservice --resource-group $resourcegroup --slot deployment
+  
