@@ -185,7 +185,6 @@ az eventgrid event-subscription create \
   --endpoint $payendpoint \
   --included-event-types "$cloudname.Token.Processed"
   
-echo "Create Payment invalid event subscriptions in $topicname"
 az eventgrid event-subscription create \
   --output none \
   --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
