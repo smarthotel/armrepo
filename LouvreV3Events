@@ -1,6 +1,4 @@
 # Set variables
-
-# Set variables
 subscription=smartconnect
 subscriptionId="$(az account show --query id -o tsv)"
 location=westeurope
