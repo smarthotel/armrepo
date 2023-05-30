@@ -66,6 +66,13 @@ az eventgrid event-subscription create \
   --name CrsPostBusinessProcessed \
   --endpoint $postifcendpoint \
   --included-event-types "$cloudname.Business.Processed"
+  
+az eventgrid event-subscription create \
+  --output none \
+  --source-resource-id "/subscriptions/$subscriptionId/resourceGroups/$resourcegroup/providers/Microsoft.EventGrid/topics/$topicname" \
+  --name CrsPostBatchProcessed \
+  --endpoint $postifcendpoint \
+  --included-event-types "$cloudname.Batch.Processed"
     
 az eventgrid event-subscription create \
   --output none \
