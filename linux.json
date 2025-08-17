@@ -18,7 +18,7 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "rg-smart-connect-dev",
+      "defaultValue": "[resourceGroup().location]",
       "metadata": {
         "description": "Locatie van de resources"
       }
