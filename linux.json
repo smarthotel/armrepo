@@ -11,7 +11,7 @@
     },
     "appName": {
       "type": "string",
-      "defaultValue": "connect-dev-bizz-inv",
+      "defaultValue": "connect-dev-appname",
       "metadata": {
         "description": "Naam van de App Service (moet beginnen met connect-dev)"
       }
